@@ -156,11 +156,11 @@ class Core:
 
 			@socketio.on('join', namespace='/websocket')
 			def on_join():
-				payload = {'status': 'OK', 'message': {}}
+				payload = {'status': 'OK'}
 				for e in adapterHandlers.keys():
 					rs = adapterHandlers[e]('debut')
 					if rs is not None:
-						payload['message'][e] = rs
+						payload.update(rs)
 				join_room('ready')
 				emit('ALL_DATA', json.dumps(payload))
 
