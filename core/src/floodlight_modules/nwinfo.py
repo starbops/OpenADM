@@ -99,7 +99,10 @@ class NWInfo:
         """
         # First impression, dump all we have
         if raw == 'debut':
-            return {'controllers': self.controllers}
+            result = []
+            for k in self.controllers.keys():
+                result.append(self.controllers[k])
+            return result
 
         # Update controllers datastore
         key = raw['controller']
