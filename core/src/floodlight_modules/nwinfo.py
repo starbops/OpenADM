@@ -102,7 +102,7 @@ class NWInfo:
             result = []
             for k in self.controllers.keys():
                 result.append(self.controllers[k])
-            return result
+            return {'controllers': result}
 
         # Update controllers datastore
         key = raw['controller']
