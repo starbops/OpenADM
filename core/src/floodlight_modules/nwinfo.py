@@ -404,24 +404,21 @@ class NWInfo:
         if dpid != None and port != None:
             key = (dpid, port)
             try:
-                result = json.dumps(self.portstats[key])
+                result = self.portstats[key]
             except KeyError as e:
                 logger.warn('Key of portstats not found: %s' % str(e))
-                result = json.dumps([])
+                result = []
         elif dpid != None:
-            tmp = [self.portstats[(d, p)]
+            result = [self.portstats[(d, p)]
                    for (d, p) in self.portstats.keys()
                        if d == dpid]
-            result = json.dumps(tmp)
         elif port != None:
-            tmp = [self.portstats[(d, p)]
+            result = [self.portstats[(d, p)]
                    for (d, p) in self.portstats.keys()
                        if p == port]
-            result = json.dumps(tmp)
         else:
-            tmp = [self.portstats[(d, p)]
+            result = [self.portstats[(d, p)]
                    for (d, p) in self.portstats.keys()]
-            result = json.dumps(tmp)
 
         return result
 
@@ -435,15 +432,14 @@ class NWInfo:
         dpid = req.get('dpid', None)
         if dpid is not None:
             try:
-                result = json.dumps({'dpid': dpid,
-                                     'flows': self.flowtables[dpid]['flows']})
+                result = {'dpid': dpid,
+                          'flows': self.flowtables[dpid]['flows']}
             except KeyError as e:
                 logger.warn('Key of flows not found: %s' % str(e))
-                result = json.dumps([])
+                result = []
         else:
-            tmp = [{'dpid': id, 'flows': self.flowtables[id]['flows']}
+            result = [{'dpid': id, 'flows': self.flowtables[id]['flows']}
                    for id in self.flowtables.keys()]
-            result = json.dumps(tmp)
 
         return result
 
@@ -457,15 +453,14 @@ class NWInfo:
         dpid = req.get('dpid', None)
         if dpid is not None:
             try:
-                result = json.dumps({'dpid': dpid,
-                                     'flows': self.flowtables[dpid]['flows'][0:10]})
+                result = {'dpid': dpid,
+                          'flows': self.flowtables[dpid]['flows'][0:10]}
             except KeyError as e:
                 logger.warn('Key of flows not found: %s' % str(e))
-                result = json.dumps([])
+                result = []
         else:
-            tmp = [{'dpid': id, 'flows': self.flowtables[id]['flows'][0:10]}
+            result = [{'dpid': id, 'flows': self.flowtables[id]['flows'][0:10]}
                    for id in self.flowtables.keys()]
-            result = json.dumps(tmp)
 
         return result
 
@@ -484,7 +479,7 @@ class NWInfo:
         self.portstats = {}
         self.flowtables = {}
 
-        result = json.dumps({'status': 'OK'})
+        result = {'status': 'OK'}
 
         return result
 
